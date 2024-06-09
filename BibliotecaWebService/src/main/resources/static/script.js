@@ -52,7 +52,7 @@ $(document).ready(function() {
                 $('#autorId').val('');
                 $('#tituloLivro').val('');
                 $('#generoLivro').val('');
-                carregarLibrosPorAutor(autorId);
+                carregarLivrosPorAutor(autorId);
             },
             error: function(error) {
                 alert('Erro ao adicionar livro');
@@ -70,7 +70,9 @@ function carregarAutores() {
             $('#listaAutores').empty();
             if (response && response.length > 0) {
                 response.forEach(function(autor) {
-                    $('#listaAutores').append('<li>' + autor.nombre_completo + ' - ' + autor.nacionalidad + ' <button onclick="eliminarAutor(' + autor.id + ')">Excluir</button> <button onclick="carregarLivrosPorAutor(' + autor.id + ')">Ver Libros</button></li>');
+                    var nomeCompleto = typeof autor.nombre_completo === 'string' ? autor.nombre_completo : 'Nome do autor não disponível';
+                    var nacionalidade = typeof autor.nacionalidad === 'string' ? autor.nacionalidad : 'Nacionalidade não disponível';
+                    $('#listaAutores').append('<li>' + nomeCompleto + ' - ' + nacionalidade + ' <button onclick="eliminarAutor(' + autor.id + ')">Excluir</button> <button onclick="carregarLivrosPorAutor(' + autor.id + ')">Ver Livros</button></li>');
                 });
             } else {
                 $('#listaAutores').append('<li>Nenhum autor encontrado</li>');
