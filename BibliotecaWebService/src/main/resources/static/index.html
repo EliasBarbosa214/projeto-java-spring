@@ -4,6 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento de Autores e Livros</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        h2 {
+            margin-top: 30px;
+        }
+
+        form {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        form button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
 <h1>Gerenciamento de Autores e Livros</h1>
@@ -11,8 +69,10 @@
 <!-- Formulário para adicionar um novo autor -->
 <h2>Adicionar Autor</h2>
 <form id="formAdicionar">
-    Nome: <input type="text" id="nome" required><br>
-    Nacionalidade: <input type="text" id="nacionalidade" required><br>
+    <label for="nome">Nome:</label><br>
+    <input type="text" id="nome" required><br>
+    <label for="nacionalidade">Nacionalidade:</label><br>
+    <input type="text" id="nacionalidade" required><br>
     <button type="submit">Adicionar</button>
 </form>
 
@@ -23,9 +83,12 @@
 <!-- Formulário para adicionar um novo livro -->
 <h2>Adicionar Livro</h2>
 <form id="formAdicionarLivro">
-    ID do Autor: <input type="text" id="autorId" required><br>
-    Título: <input type="text" id="tituloLivro" required><br>
-    Gênero: <input type="text" id="generoLivro" required><br>
+    <label for="autorId">ID do Autor:</label><br>
+    <input type="text" id="autorId" required><br>
+    <label for="tituloLivro">Título:</label><br>
+    <input type="text" id="tituloLivro" required><br>
+    <label for="generoLivro">Gênero:</label><br>
+    <input type="text" id="generoLivro" required><br>
     <button type="submit">Adicionar Livro</button>
 </form>
 

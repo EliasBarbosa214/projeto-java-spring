@@ -48,7 +48,7 @@ public class AutorController {
 		}
 	}
 
-	@PostMapping("/{autorId}/libro/agregar") // Ajustado para "libro" ao invés de "libros"
+	@PostMapping("/{autorId}/libro/agregar")
 	public ResponseEntity<String> adicionarLibro(@PathVariable Long autorId, @RequestBody Libro libro) {
 		Autor autor = autorRepository.findById(autorId).orElse(null);
 		if (autor != null) {

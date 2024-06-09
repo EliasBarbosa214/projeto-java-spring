@@ -8,7 +8,7 @@ $(document).ready(function() {
         var nacionalidade = $('#nacionalidade').val();
 
         var novoAutor = {
-            nombre_completo: nome,
+            nomeCompleto: nome, // Corrigido para nome_completo
             nacionalidad: nacionalidade
         };
 
@@ -35,22 +35,26 @@ $(document).ready(function() {
 
         var autorId = $('#autorId').val();
         var titulo = $('#tituloLivro').val();
+        var categoriaId = $('#categoriaId').val(); // Supondo que você tenha um campo para o ID da categoria
         var genero = $('#generoLivro').val();
 
         var novoLibro = {
+            autor: { id: autorId },
             titulo: titulo,
+            categoria: { id_categoria: categoriaId },
             genero: genero
         };
 
         $.ajax({
             type: 'POST',
-            url: '/autor/' + autorId + '/libros',
+            url: '/autor/' + autorId + '/libro/agregar',
             contentType: 'application/json',
             data: JSON.stringify(novoLibro),
             success: function(response) {
                 alert(response);
                 $('#autorId').val('');
                 $('#tituloLivro').val('');
+                $('#categoriaId').val('');
                 $('#generoLivro').val('');
                 carregarLivrosPorAutor(autorId);
             },
@@ -73,7 +77,7 @@ function carregarAutores() {
                 response.forEach(function(autor) {
                     var nomeCompleto = typeof autor.nombre_completo === 'string' ? autor.nombre_completo : 'Nome do autor não disponível';
                     var nacionalidade = typeof autor.nacionalidad === 'string' ? autor.nacionalidad : 'Nacionalidade não disponível';
-                    $('#listaAutores').append('<li>' + autor.nomeCompleto + ' - ' + autor.nacionalidad + ' <button onclick="eliminarAutor(' + autor.id + ')">Excluir</button> <button onclick="carregarLivrosPorAutor(' + autor.id + ')">Ver Livros</button></li>');
+                    $('#listaAutores').append('<li>' + ' ID: '  + autor.id + ' - Nome: ' + autor.nomeCompleto  + ' - Nacionalidade: ' + autor.nacionalidad + ' <button onclick="eliminarAutor(' + autor.id + ')">Excluir</button> <button onclick="carregarLivrosPorAutor(' + autor.id + ')">Ver Livros</button></li>');
 
                 });
             } else {
