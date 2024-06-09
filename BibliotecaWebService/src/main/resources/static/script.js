@@ -67,12 +67,14 @@ function carregarAutores() {
         type: 'GET',
         url: '/autor/get',
         success: function(response) {
+        console.log("Dados de resposta dos autores:", response); // Adicionando console.log() para imprimir os dados de resposta
             $('#listaAutores').empty();
             if (response && response.length > 0) {
                 response.forEach(function(autor) {
                     var nomeCompleto = typeof autor.nombre_completo === 'string' ? autor.nombre_completo : 'Nome do autor não disponível';
                     var nacionalidade = typeof autor.nacionalidad === 'string' ? autor.nacionalidad : 'Nacionalidade não disponível';
-                    $('#listaAutores').append('<li>' + nomeCompleto + ' - ' + nacionalidade + ' <button onclick="eliminarAutor(' + autor.id + ')">Excluir</button> <button onclick="carregarLivrosPorAutor(' + autor.id + ')">Ver Livros</button></li>');
+                    $('#listaAutores').append('<li>' + autor.nomeCompleto + ' - ' + autor.nacionalidad + ' <button onclick="eliminarAutor(' + autor.id + ')">Excluir</button> <button onclick="carregarLivrosPorAutor(' + autor.id + ')">Ver Livros</button></li>');
+
                 });
             } else {
                 $('#listaAutores').append('<li>Nenhum autor encontrado</li>');

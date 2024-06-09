@@ -7,9 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import com.uae.biblioteca.entidades.Autor;
 import com.uae.biblioteca.entidades.Libro;
 import com.uae.biblioteca.modelo.AutorRepository;
-import com.uae.biblioteca.modelo.LibroRepository; // Importe necessário para LibroRepository
+import com.uae.biblioteca.modelo.LibroRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,14 +19,11 @@ public class AutorController {
 	private AutorRepository autorRepository;
 
 	@Autowired
-	private LibroRepository libroRepository; // Declaração do LibroRepository
+	private LibroRepository libroRepository;
 
 	@GetMapping("/get")
 	public List<Autor> listarAutores() {
-		Iterable<Autor> autoresIterable = autorRepository.findAll();
-		List<Autor> autoresList = new ArrayList<>();
-		autoresIterable.forEach(autoresList::add);
-		return autoresList;
+		return autorRepository.findAll();
 	}
 
 	@PostMapping("/agregar")
@@ -52,12 +48,14 @@ public class AutorController {
 		}
 	}
 
-	@PostMapping("/{autorId}/libros/agregar")
+	@PostMapping("/{autorId}/libro/agregar") // Ajustado para "libro" ao invés de "libros"
 	public ResponseEntity<String> adicionarLibro(@PathVariable Long autorId, @RequestBody Libro libro) {
 		Autor autor = autorRepository.findById(autorId).orElse(null);
 		if (autor != null) {
 			libro.setAutor(autor);
 			libroRepository.save(libro);
+			autor.getLibros().add(libro);
+			autorRepository.save(autor);
 			return ResponseEntity.ok("Libro adicionado com sucesso");
 		} else {
 			return ResponseEntity.badRequest().body("Autor não encontrado");
