@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "libro") // Corrigir o nome da tabela para "libro"
+@Table(name = "libro") // Corrigir o nome da tabela para "livro"
 public class Libro {
 
 	@Id
@@ -16,6 +16,8 @@ public class Libro {
 	private String titulo;
 
 	private String genero;
+
+	private boolean disponivel;
 
 	@ManyToOne
 	@JoinColumn(name = "id_autor") // Especifica o nome correto da coluna na tabela do banco de dados
@@ -53,5 +55,13 @@ public class Libro {
 
 	public void setAutor(Autor autor) {
 		this.autor = autor;
+	}
+
+	public boolean isDisponivel() {
+		return disponivel;
+	}
+
+	public void setDisponivel(boolean disponivel) {
+		this.disponivel = disponivel;
 	}
 }

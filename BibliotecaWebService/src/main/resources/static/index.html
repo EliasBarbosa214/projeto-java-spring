@@ -46,6 +46,7 @@
             border: none;
             border-radius: 3px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         form button:hover {
@@ -60,6 +61,22 @@
 
         ul li {
             margin-bottom: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .emprestimo {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .emprestimo button {
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -95,6 +112,15 @@
 <!-- Lista de livros -->
 <h2>Lista de Livros por Autor</h2>
 <ul id="listaLivros"></ul>
+
+<!-- Empréstimo e Devolução de Livros -->
+<div class="emprestimo">
+    <h2>Empréstimo e Devolução de Livros</h2>
+    <label for="idLivroEmprestimo">ID do Livro:</label>
+    <input type="text" id="idLivroEmprestimo" required>
+    <button onclick="emprestarLivro($('#idLivroEmprestimo').val())">Emprestar</button>
+    <button onclick="devolverLivro($('#idLivroEmprestimo').val())">Devolver</button>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="script.js"></script>

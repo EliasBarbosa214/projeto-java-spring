@@ -1,2 +1,2 @@
-# Sistema-Biblioteca-UAE
-Sistema de biblioteca para la UAE, utilizando MySQL - Java Spring Boot
+# Sistema Biblioteca
+Sistema de biblioteca, utilizando MySQL - Java Spring Boot

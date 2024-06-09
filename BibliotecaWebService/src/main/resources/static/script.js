@@ -35,13 +35,11 @@ $(document).ready(function() {
 
         var autorId = $('#autorId').val();
         var titulo = $('#tituloLivro').val();
-        var categoriaId = $('#categoriaId').val(); // Supondo que você tenha um campo para o ID da categoria
         var genero = $('#generoLivro').val();
 
         var novoLibro = {
             autor: { id: autorId },
             titulo: titulo,
-            categoria: { id_categoria: categoriaId },
             genero: genero
         };
 
@@ -54,7 +52,6 @@ $(document).ready(function() {
                 alert(response);
                 $('#autorId').val('');
                 $('#tituloLivro').val('');
-                $('#categoriaId').val('');
                 $('#generoLivro').val('');
                 carregarLivrosPorAutor(autorId);
             },
@@ -71,14 +68,12 @@ function carregarAutores() {
         type: 'GET',
         url: '/autor/get',
         success: function(response) {
-        console.log("Dados de resposta dos autores:", response); // Adicionando console.log() para imprimir os dados de resposta
             $('#listaAutores').empty();
             if (response && response.length > 0) {
                 response.forEach(function(autor) {
-                    var nomeCompleto = typeof autor.nombre_completo === 'string' ? autor.nombre_completo : 'Nome do autor não disponível';
-                    var nacionalidade = typeof autor.nacionalidad === 'string' ? autor.nacionalidad : 'Nacionalidade não disponível';
-                    $('#listaAutores').append('<li>' + ' ID: '  + autor.id + ' - Nome: ' + autor.nomeCompleto  + ' - Nacionalidade: ' + autor.nacionalidad + ' <button onclick="eliminarAutor(' + autor.id + ')">Excluir</button> <button onclick="carregarLivrosPorAutor(' + autor.id + ')">Ver Livros</button></li>');
-
+                    var nomeCompleto = autor.nomeCompleto ? autor.nomeCompleto : 'Nome do autor não disponível';
+                    var nacionalidade = autor.nacionalidad ? autor.nacionalidad : 'Nacionalidade não disponível';
+                    $('#listaAutores').append('<li>ID: ' + autor.id + ' - Nome: ' + nomeCompleto + ' - Nacionalidade: ' + nacionalidade + ' <button onclick="eliminarAutor(' + autor.id + ')">Excluir</button> <button onclick="carregarLivrosPorAutor(' + autor.id + ')">Ver Livros</button></li>');
                 });
             } else {
                 $('#listaAutores').append('<li>Nenhum autor encontrado</li>');
@@ -114,14 +109,44 @@ function carregarLivrosPorAutor(autorId) {
             $('#listaLivros').empty();
             if (response && response.length > 0) {
                 response.forEach(function(libro) {
-                    $('#listaLivros').append('<p>Título: ' + libro.titulo + ', Gênero: ' + libro.genero + '</p>');
+                    var disponibilidade = libro.disponivel ? 'Disponível' : 'Indisponível';
+                    $('#listaLivros').append('<li>ID: ' + libro.id + ' - Título: ' + libro.titulo + ' - Gênero: ' + libro.genero + ' - Disponibilidade: ' + disponibilidade + '</li>');
                 });
             } else {
-                $('#listaLivros').append('<p>Este autor não tem libros cadastrados.</p>');
+                $('#listaLivros').append('<li>Este autor não tem livros cadastrados.</li>');
             }
         },
         error: function(error) {
-            alert('Erro ao carregar lista de libros');
+            alert('Erro ao carregar lista de livros');
+            console.log(error);
+        }
+    });
+}
+
+function emprestarLivro(idLivro) {
+    $.ajax({
+        type: 'POST',
+        url: '/emprestimo/emprestar/' + idLivro,
+        success: function(response) {
+            alert(response);
+        },
+        error: function(error) {
+            alert('Erro ao realizar empréstimo');
+            console.log(error);
+        }
+    });
+}
+
+function devolverLivro(idLivro) {
+    var idLivro = $('#idLivroEmprestimo').val();
+    $.ajax({
+        type: 'POST',
+        url: '/emprestimo/devolver/' + idLivro,
+        success: function(response) {
+            alert(response);
+        },
+        error: function(error) {
+            alert('Erro ao realizar devolução');
             console.log(error);
         }
     });

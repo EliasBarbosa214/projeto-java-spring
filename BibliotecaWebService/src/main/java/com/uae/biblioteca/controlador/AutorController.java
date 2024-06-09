@@ -53,6 +53,7 @@ public class AutorController {
 		Autor autor = autorRepository.findById(autorId).orElse(null);
 		if (autor != null) {
 			libro.setAutor(autor);
+			libro.setDisponivel(true); // Definindo explicitamente o valor 'true'
 			libroRepository.save(libro);
 			autor.getLibros().add(libro);
 			autorRepository.save(autor);
