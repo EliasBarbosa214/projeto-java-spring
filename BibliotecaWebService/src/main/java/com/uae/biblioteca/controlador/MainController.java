@@ -10,4 +10,9 @@ public class MainController {
     public String index() {
         return "index"; // Retorna o nome do arquivo HTML (index.html) na pasta static
     }
+
+    @GetMapping("/livros-mais-emprestados")
+    public String livrosMaisEmprestados() {
+        return "lista-mais-emprestados";
+    }
 }

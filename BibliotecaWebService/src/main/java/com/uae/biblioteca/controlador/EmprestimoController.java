@@ -14,11 +14,13 @@ public class EmprestimoController {
     @Autowired
     private LibroRepository libroRepository;
 
+
     @PostMapping("/emprestar/{idLibro}")
     public String emprestarLibro(@PathVariable Long idLibro) {
         Libro libro = libroRepository.findById(idLibro).orElse(null);
         if (libro != null && libro.isDisponivel()) {
             libro.setDisponivel(false);
+            libro.setNumeroEmprestimos(libro.getNumeroEmprestimos() + 1); // Incrementa o contador
             libroRepository.save(libro);
             return "Livro emprestado com sucesso";
         } else {

@@ -24,7 +24,11 @@ public class Libro {
 	@JsonBackReference
 	private Autor autor;
 
+	@Column(name = "numero_emprestimos")
+	private int numeroEmprestimos;
+
 	// Getters e Setters
+
 	public Long getId() {
 		return id;
 	}
@@ -64,4 +68,15 @@ public class Libro {
 	public void setDisponivel(boolean disponivel) {
 		this.disponivel = disponivel;
 	}
+
+	public int getNumeroEmprestimos() {
+		return numeroEmprestimos;
+	}
+
+	public void setNumeroEmprestimos(int numeroEmprestimos) {
+		this.numeroEmprestimos = numeroEmprestimos;
+	}
+
+	// Outros métodos da classe, se necessário
+
 }

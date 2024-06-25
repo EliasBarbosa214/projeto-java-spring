@@ -18,13 +18,13 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(novoAutor),
             success: function(response) {
-                alert(response);
+                exibirMensagem(response);
                 $('#nome').val('');
                 $('#nacionalidade').val('');
                 carregarAutores();
             },
             error: function(error) {
-                alert('Erro ao adicionar autor');
+                exibirMensagem('Erro ao adicionar autor', true);
                 console.log(error);
             }
         });
@@ -49,14 +49,14 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(novoLibro),
             success: function(response) {
-                alert(response);
+                exibirMensagem(response);
                 $('#autorId').val('');
                 $('#tituloLivro').val('');
                 $('#generoLivro').val('');
                 carregarLivrosPorAutor(autorId);
             },
             error: function(error) {
-                alert('Erro ao adicionar livro');
+                exibirMensagem('Erro ao adicionar livro', true);
                 console.log(error);
             }
         });
@@ -80,7 +80,7 @@ function carregarAutores() {
             }
         },
         error: function(error) {
-            alert('Erro ao carregar lista de autores');
+            exibirMensagem('Erro ao adicionar livro', true);
             console.log(error);
         }
     });
@@ -91,11 +91,11 @@ function eliminarAutor(id_autor) {
         type: 'DELETE',
         url: '/autor/eliminar/' + id_autor,
         success: function(response) {
-            alert(response);
+            exibirMensagem(response);
             carregarAutores();
         },
         error: function(error) {
-            alert('Erro ao excluir autor');
+            exibirMensagem('Erro ao excluir autor', true);
             console.log(error);
         }
     });
@@ -117,7 +117,7 @@ function carregarLivrosPorAutor(autorId) {
             }
         },
         error: function(error) {
-            alert('Erro ao carregar lista de livros');
+            exibirMensagem('Erro ao carregar lista de livros', true);
             console.log(error);
         }
     });
@@ -128,10 +128,10 @@ function emprestarLivro(idLivro) {
         type: 'POST',
         url: '/emprestimo/emprestar/' + idLivro,
         success: function(response) {
-            alert(response);
+            exibirMensagem(response);
         },
         error: function(error) {
-            alert('Erro ao realizar empréstimo');
+            exibirMensagem('Erro ao realizar empréstimo', true);
             console.log(error);
         }
     });
@@ -143,11 +143,26 @@ function devolverLivro(idLivro) {
         type: 'POST',
         url: '/emprestimo/devolver/' + idLivro,
         success: function(response) {
-            alert(response);
+            exibirMensagem(response);
         },
         error: function(error) {
-            alert('Erro ao realizar devolução');
+            exibirMensagem('Erro ao realizar devolução', true);
             console.log(error);
         }
     });
+}
+
+function exibirMensagem(mensagem, erro = false) {
+    var modalMensagem = $('#modalMensagem');
+    var modalBody = $('#modalMensagemCorpo');
+
+    modalMensagem.modal('show');
+
+    if (erro) {
+        modalMensagem.find('.modal-title').text('Erro');
+        modalBody.text('Erro: ' + mensagem);
+    } else {
+        modalMensagem.find('.modal-title').text('Sucesso');
+        modalBody.text(mensagem);
+    }
 }

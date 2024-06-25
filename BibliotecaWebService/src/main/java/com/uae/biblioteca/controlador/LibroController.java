@@ -10,6 +10,14 @@ import com.uae.biblioteca.modelo.LibroRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import javax.persistence.Query;
 
 import java.util.List;
@@ -24,6 +32,7 @@ public class LibroController {
 
 	@Autowired
 	private LibroRepository libroRepository;
+
 
 	@GetMapping("/")
 	public String listarLibros(Model model) {
@@ -46,7 +55,7 @@ public class LibroController {
 	@GetMapping("/editar")
 	public String mostrarFormularioEdicao(@RequestParam("id") Long id_libro, Model model) {
 		Libro libro = libroRepository.findById(id_libro).orElse(null);
-		model.addAttribute("libro", libro);
+		model.addAttribute("livro", libro);
 		return "form-libro";
 	}
 
@@ -56,9 +65,11 @@ public class LibroController {
 		return "redirect:/libro/";
 	}
 
-	private Long buscarUltimoIdLivro() {
-		Query query = entityManager.createQuery("SELECT MAX(l.idLibro) FROM Libro l");
-		Long ultimoId = (Long) query.getSingleResult();
-		return ultimoId != null ? ultimoId + 1 : 1; // Se o último ID não for encontrado, retorna 1 como o próximo ID
+	@GetMapping("/mais-emprestados")
+	public ResponseEntity<List<Libro>> listarLivrosMaisEmprestados() {
+		Pageable pageable = PageRequest.of(0, 10); // Exemplo: top 10 mais emprestados
+		List<Libro> libros = libroRepository.findTopLibrosByNumeroEmprestimos(pageable);
+		return new ResponseEntity<>(libros, HttpStatus.OK);
 	}
+
 }
