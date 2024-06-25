@@ -73,7 +73,7 @@ function carregarAutores() {
                 response.forEach(function(autor) {
                     var nomeCompleto = autor.nomeCompleto ? autor.nomeCompleto : 'Nome do autor não disponível';
                     var nacionalidade = autor.nacionalidad ? autor.nacionalidad : 'Nacionalidade não disponível';
-                    $('#listaAutores').append('<li>ID: ' + autor.id + ' - Nome: ' + nomeCompleto + ' - Nacionalidade: ' + nacionalidade + ' <button onclick="eliminarAutor(' + autor.id + ')">Excluir</button> <button onclick="carregarLivrosPorAutor(' + autor.id + ')">Ver Livros</button></li>');
+                    $('#listaAutores').append('<li>ID: ' + autor.id + ' - Nome: ' + nomeCompleto + ' - Nacionalidade: ' + nacionalidade + '  <button onclick="carregarLivrosPorAutor(' + autor.id + ')">Ver Livros</button> <button onclick="eliminarAutor(' + autor.id + ')">Excluir</button></li>');
                 });
             } else {
                 $('#listaAutores').append('<li>Nenhum autor encontrado</li>');
